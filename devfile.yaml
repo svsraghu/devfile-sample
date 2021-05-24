@@ -1,0 +1,102 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@svsraghu 
+redhat-developer
+/
+devfile-sample
+3
+14
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+devfile-sample/devfile.yaml
+@andrewballantyne
+andrewballantyne Devfile Sample Repo
+Latest commit 5ffa484 on Jan 8
+ History
+ 1 contributor
+59 lines (59 sloc)  1.27 KB
+  
+schemaVersion: 2.0.0
+metadata:
+  name: nodejs
+  version: 1.0.0
+  attributes:
+    alpha.build-context: src
+    alpha.build-dockerfile: Dockerfile
+components:
+  - name: buildguidance
+    attributes:
+      tool: console-import
+    container:
+      image: buildguidanceimage-placeholder
+      memoryLimit: 1024Mi
+      endpoints:
+        - name: http-3001
+          targetPort: 3001
+  - name: runtime
+    container:
+      image: registry.access.redhat.com/ubi8/nodejs-12:1-45
+      memoryLimit: 1024Mi
+      mountSources: true
+      sourceMapping: /project
+      endpoints:
+        - name: http-3000
+          targetPort: 3000
+commands:
+  - id: install
+    exec:
+      component: runtime
+      commandLine: npm install
+      workingDir: /project/src
+      group:
+        kind: build
+        isDefault: true
+  - id: run
+    exec:
+      component: runtime
+      commandLine: npm start
+      workingDir: /project/src
+      group:
+        kind: run
+        isDefault: true
+  - id: debug
+    exec:
+      component: runtime
+      commandLine: npm run debug
+      workingDir: /project/src
+      group:
+        kind: debug
+        isDefault: true
+  - id: test
+    exec:
+      component: runtime
+      commandLine: npm test
+      workingDir: /project/src
+      group:
+        kind: test
+        isDefault: true
+© 2021 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+Loading complete
